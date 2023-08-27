@@ -62,6 +62,16 @@ spec:
       labels:
         app: liferay
     spec:
+      initContainers:
+        - name: hostname-init
+          image: busybox:latest
+          command: ["sh", "-c", "echo \"-Djgroups.bind_addr=$(hostname -i)\" > /etc/hostname"]
+          securityContext:
+            runAsUser: 0
+            allowPrivilegeEscalation: false
+          volumeMounts:
+          - mountPath: /etc
+            name: hostname-volume
       containers:
       - env: 
         - name: LIFERAY_JAVA_OPTS 
@@ -72,14 +82,16 @@ spec:
           value: "true"
         - name: LIFERAY_REDIRECT_PERIOD_URL_PERIOD_SECURITY_PERIOD_MODE #La usaremos para permitir los redirect en el cluster
           value: "domain"
+        - name: CATALINA_OPTS #La usaremos para permitir los redirect en el cluster
+          value: $(cat /etc/hostname)
         image: liferay/portal:7.3.1-ga2
         resources:
           requests: #Recursos que se aprovisionan al memomento de arrancar el pod
             memory: "2048Mi"
-            cpu: "2"
+            cpu: "800m"
           limits: #Limite de recursos que podrá disponer el pod
             memory: "4098Mi"
-            cpu: "3"
+            cpu: "1600m"
         name: liferay 
         ports: #puertos abiertos en el contenedor
         - containerPort: 11311
@@ -112,3 +124,5 @@ spec:
       - name: liferay-config
         persistentVolumeClaim:
           claimName: liferay-config
+      - name: hostname-volume
+        emptyDir: {}
