@@ -12,6 +12,15 @@ Repositorio de código con el fin de servir los ficheros necesarios para realiza
     minikube delete
     minikube start
 ```
+## run elasticsearch, postgres
+Run postgres
+```
+docker run -d -p 5432:5432 -v /home/tungvtr90/docker/pgdata:/var/lib/postgresql/data --name postgres -e POSTGRES_PASSWORD=postgres -d postgres:12 
+```
+Run elastic
+```
+kubectl apply -f search-deployment.yaml -n=liferay-prod
+```
 ## Run deployment
 ```
     kubectl create namespace liferay-prod
@@ -25,6 +34,11 @@ Repositorio de código con el fin de servir los ficheros necesarios para realiza
 restart pod
 
 ## Run ingress
+enable ingress
+```
+minikube addons enable ingress
+kubectl get pods -n ingress-nginx
+```
 start ingress:
 ```
     kubectl apply -f nginx-ingress.yaml -n=liferay-prod

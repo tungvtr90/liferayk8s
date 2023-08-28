@@ -60,8 +60,8 @@ spec:
         image: liferaycloud/elasticsearch:6.8.4-3.0.5
         resources:
           limits:
-            memory: "2024Mi"
-            cpu: "2"
+            memory: "1524Mi"
+            cpu: "1200m"
         ports:
         - containerPort: 9300
         name: search

@@ -46,7 +46,7 @@
 
      <JDBC_PING 
 
-          connection_url="jdbc:postgresql://host.docker.internal:5432/lportal_1" 
+          connection_url="jdbc:postgresql://host.docker.internal:5432/lportal_2" 
 
           connection_username="postgres" 
 

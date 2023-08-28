@@ -84,7 +84,7 @@ spec:
           value: "domain"
         - name: CATALINA_OPTS #La usaremos para permitir los redirect en el cluster
           value: $(cat /etc/hostname)
-        image: liferay/portal:7.3.1-ga2
+        image: liferay/portal:7.4.3.82-ga82
         resources:
           requests: #Recursos que se aprovisionan al memomento de arrancar el pod
             memory: "2048Mi"
